@@ -1,0 +1,51 @@
+$(document).ready(function(){
+  $.ajax({
+    method:"GET",
+    url:"https://recruit.ainimal.io/friend_list"
+  })
+  .done(function(msg){
+    //console.log("all" , msg);
+    //console.log("2nd gender:" , msg[1].gender);
+    
+    //這裡寫一個function 完成全部？
+    var personlist = ['#person1','#person2','#person3','#person4','#person5','#person6','#person7','#person8'];
+    
+     $.each(personlist,function(i,item){
+      
+       var nickname = msg[i].nickname;
+       //console.log(nickname)
+       $(item).html(nickname);
+       
+       var animal = msg[i].animal;
+       console.log(i, item, animal);  
+       if (animal == 1){
+         $(item).append('<i class="fas fa-frog"></i>');
+       }
+       else if (animal == 2){
+         $(item).append('<i class="fas fa-kiwi-bird"></i>');
+       }
+       else{
+         $(item).append('<i class="fas fa-dog"></i>');
+       }
+       
+       var gender = msg[i].gender;
+       if (gender == "male"){
+         $(item).append('<i class="fas fa-mars"></i>');
+       }
+       else{
+         $(item).append('<i class="fas fa-venus"></i>');
+       }
+       
+       
+       var last_message = msg[i].last_message;
+    $(item).append(last_message);
+    
+       
+    var last_message_timestamp = msg[i].last_message_timestamp;
+    $(item).append( last_message_timestamp)
+       
+     })
+    
+    
+  });
+})
