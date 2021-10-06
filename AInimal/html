@@ -46,11 +46,6 @@
             padding: 18px;
             margin: 6px 0;
         }
-
-        i
-        {
-            position:absolute; right:0px;
-        }
         </style>
     </head>
     
@@ -62,13 +57,12 @@
                 <h3>Intimate</h3>
                 <div class="people" id="person1">
                     <i class="fas fa-trash-alt" style="float: right"></i>  
-                    <i class="fas fa-check" style="float: right"></i>
+                    <i class="fas fa-chevron-up" " style="float: right"></i>
                 </div>
 
                 <div class="people" id="person2">
-                    person2
                     <i class="fas fa-trash-alt" style="float: right"></i>  
-                    <i class="fas fa-check" style="float: right"></i>
+                    <i class="fas fa-chevron-up" " style="float: right"></i>
                 </div>
 
             </div>
@@ -76,45 +70,38 @@
             <div class="NotIntimate">
                 <h3>Friends</h3>
                 <div class="people" id="person3">
-                    person1
                     <i class="fas fa-trash-alt" style="float: right"></i>  
-                    <i class="fas fa-check" style="float: right"></i>
+                    <i class="fas fa-chevron-up" " style="float: right"></i>
                 </div>
 
                 <div class="people" id="person4">
-                    person2
                     <i class="fas fa-trash-alt" style="float: right"></i>  
-                    <i class="fas fa-check" style="float: right"></i>
+                    <i class="fas fa-chevron-up" " style="float: right"></i>
                 </div>
               
               <div class="people" id="person5">
-                    person2
-                    <i class="fas fa-trash-alt" style="float: right"></i>  
-                    <i class="fas fa-check" style="float: right"></i>
+                    <i class="fas fa-trash-alt" style="float: right"></i>
+                    <i class="fas fa-chevron-up" " style="float: right"></i>
                 </div>
               
               <div class="people" id="person6">
-                    person2
                     <i class="fas fa-trash-alt" style="float: right"></i>  
-                    <i class="fas fa-check" style="float: right"></i>
+                    <i class="fas fa-chevron-up" " style="float: right"></i>
                 </div>
               
               <div class="people" id="person7">
-                    person2
                     <i class="fas fa-trash-alt" style="float: right"></i>  
-                    <i class="fas fa-check" style="float: right"></i>
+                    <i class="fas fa-chevron-up" " style="float: right"></i>
                 </div>
               
               <div class="people" id="person8">
-                    person2
                     <i class="fas fa-trash-alt" style="float: right"></i>  
-                    <i class="fas fa-check" style="float: right"></i>
+                    <i class="fas fa-chevron-up" " style="float: right"></i>
                 </div>
 
             </div>
             
         </div>
-        
     </body>
 </html>
 
