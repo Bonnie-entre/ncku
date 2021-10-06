@@ -4,7 +4,7 @@ $(document).ready(function(){
     url:"https://recruit.ainimal.io/friend_list"
   })
   .done(function(msg){
-    
+  
     var personlist = ['#person1','#person2','#person3','#person4','#person5','#person6','#person7','#person8'];
     
      $.each(personlist,function(i,item){
@@ -12,10 +12,10 @@ $(document).ready(function(){
        var nickname = msg[i].nickname;
        $(item).html(nickname);
        
-       var comtags = msg[i].comtags;
-       if (comtags==null){comtags=" "}
-       comtags =  '<div style="float:right;">'+comtags+'</d>';
-       $(item).append( comtags)
+       var sign = msg[i].sign;
+       if (sign==null){sign=" "}
+       sign =  '<div style="float:right;">'+sign+'</d>';
+       $(item).append( sign)
        
        var animal = msg[i].animal;
        if (animal == 1){
@@ -43,6 +43,5 @@ $(document).ready(function(){
        $(item).append( last)
        
      })
-    
   });
 })
