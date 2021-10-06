@@ -4,16 +4,12 @@ $(document).ready(function(){
     url:"https://recruit.ainimal.io/friend_list"
   })
   .done(function(msg){
-    //console.log("all" , msg);
-    //console.log("2nd gender:" , msg[1].gender);
-    
-    //這裡寫一個function 完成全部？
+  
     var personlist = ['#person1','#person2','#person3','#person4','#person5','#person6','#person7','#person8'];
     
      $.each(personlist,function(i,item){
       
        var nickname = msg[i].nickname;
-       //console.log(nickname)
        $(item).html(nickname);
        
        var animal = msg[i].animal;
@@ -45,7 +41,5 @@ $(document).ready(function(){
     $(item).append( last_message_timestamp)
        
      })
-    
-    
   });
 })
