@@ -4,7 +4,7 @@ $(document).ready(function(){
     url:"https://recruit.ainimal.io/friend_list"
   })
   .done(function(msg){
-  
+    
     var personlist = ['#person1','#person2','#person3','#person4','#person5','#person6','#person7','#person8'];
     
      $.each(personlist,function(i,item){
@@ -12,16 +12,20 @@ $(document).ready(function(){
        var nickname = msg[i].nickname;
        $(item).html(nickname);
        
+       var comtags = msg[i].comtags;
+       if (comtags==null){comtags=" "}
+       comtags =  '<div style="float:right;">'+comtags+'</d>';
+       $(item).append( comtags)
+       
        var animal = msg[i].animal;
-       console.log(i, item, animal);  
        if (animal == 1){
-         $(item).append('<i class="fas fa-frog"></i>');
+         $(item).append('<i class="fas fa-frog fa-2x" style="float: left"></i>');
        }
        else if (animal == 2){
-         $(item).append('<i class="fas fa-kiwi-bird"></i>');
+         $(item).append('<i class="fas fa-kiwi-bird fa-2x" style="float: left"></i>');
        }
        else{
-         $(item).append('<i class="fas fa-dog"></i>');
+         $(item).append('<i class="fas fa-dog fa-2x" style="float: left"></i>');
        }
        
        var gender = msg[i].gender;
@@ -32,14 +36,13 @@ $(document).ready(function(){
          $(item).append('<i class="fas fa-venus"></i>');
        }
        
-       
+       var last="";
        var last_message = msg[i].last_message;
-    $(item).append(last_message);
-    
-       
-    var last_message_timestamp = msg[i].last_message_timestamp;
-    $(item).append( last_message_timestamp)
+       var last_message_timestamp = msg[i].last_message_timestamp;
+       last = '<div style="float:center;">' + last_message + '</div>' + '<div style="float:right;">'+last_message_timestamp+'</d>';
+       $(item).append( last)
        
      })
+    
   });
 })
