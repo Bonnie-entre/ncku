@@ -1,0 +1,150 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Week3_practice2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string mapSize, num, site;
+            int countForArray, x=0, y=0;
+
+            //地圖大小、建立 arrayMap
+            while (true)
+            {
+                Console.Write("地圖大小(1~10):");
+                mapSize = Console.ReadLine();
+                int num_mapSize = Int32.Parse(mapSize);
+                if (num_mapSize < 1 || num_mapSize > 10)
+                {
+                    Console.WriteLine("超出範圍");
+                }
+                else if (num_mapSize < 11 && num_mapSize > 0)
+                { break; }
+                else
+                {
+                    Console.WriteLine("請輸入範圍內的整數");
+                }
+            }
+            int[,] arrayMap = new int[Int32.Parse(mapSize), Int32.Parse(mapSize)];
+            for (int j=0; j< Int32.Parse(mapSize) ; j++)          //arrayMap初始化0
+            {
+                for ( int k=0; k< Int32.Parse(mapSize); k++)
+                { arrayMap[j, k] = 0; }
+            }
+
+            //地雷數量
+            while (true)
+            {
+                Console.Write("地雷數量(1~10):");
+                num = Console.ReadLine();
+                int num_num = Int32.Parse(num);
+                if (num_num < 1 || num_num > 10)
+                {
+                    Console.WriteLine("超出範圍");
+                }
+                else if (num_num < 11 && num_num > 0)
+                { break; }
+                else
+                {
+                    Console.WriteLine("請輸入範圍內的整數");
+                }
+            }
+
+            //地雷位置、在 arrayMap++
+            int[,] array = new int[Int32.Parse(num), 2] ;
+            while (true)
+            {
+                int num_mapSize = Int32.Parse(mapSize);
+                for (int i=0; i< Int32.Parse(num); i++ )
+                {
+                    Console.Write("第" + i + "個地雷的位置(以空白區隔):");
+                    site = Console.ReadLine();
+
+                    string[] sites = site.Split(' ');
+
+                    countForArray = 0;
+                    
+                    foreach (var s in sites)                            
+                    {
+                        //System.Console.WriteLine($"<{s}>");                
+                        int num_s = Int32.Parse(s);
+                        if (num_s < 0 || num_s >= num_mapSize)
+                        {
+                            Console.WriteLine("地雷位置超出範圍");
+                            System.Environment.Exit(0);
+                        }
+                        else if (num_s <= num_mapSize && num_s >= 0)
+                        {
+                            if (countForArray==0)                        //(x,y) for arrayMap
+                            { x = num_s; }
+                            else { y = num_s; }
+
+                            array[i, countForArray] = num_s;            //array初始化 for 自己檢查
+                            countForArray += 1;
+                            continue;
+                        }
+                        else
+                        {
+                            Console.WriteLine("請輸入兩個以空白區隔的整數");
+                        }
+                    }
+                    // 畫地雷圖
+                    arrayMap[x, y] = -5;
+                    if (x-1>=0)
+                    { arrayMap[x - 1, y]++; }
+                    if (x+1< Int32.Parse(mapSize))
+                    { arrayMap[x + 1, y]++; }
+                    if (y-1 >= 0)
+                    { arrayMap[x, y - 1]++; }
+                    if (y + 1 < Int32.Parse(mapSize))
+                    { arrayMap[x, y + 1]++; }
+                    if (x-1>=0 && y - 1 >= 0)                            //左上
+                    { arrayMap[x-1, y-1]++; }
+                    if (x+1 < Int32.Parse(mapSize) && y - 1 >= 0)      //右上
+                    { arrayMap[x + 1, y - 1]++; }
+                    if (x - 1 >= 0 && y + 1 < Int32.Parse(mapSize))    //左下
+                    { arrayMap[x - 1, y+1]++; }
+                    if (x + 1 < Int32.Parse(mapSize) && y + 1 < Int32.Parse(mapSize))      //右下
+                    { arrayMap[x + 1, y + 1]++; }
+                    x = 0; y = 0;
+                }
+                break;
+            }
+
+            Console.WriteLine("---");
+
+        
+            //簡短總結      ##記得刪除
+            //Console.WriteLine("地圖大小(1~10):" + mapSize + "    地雷數量(1~10):" + num);
+            //Console.Write("地雷位置:");
+            //for (int a=0 ; a<Int32.Parse(num) ; a++)
+            //{for ( int k=0; k<2; k++)
+            //    {Console.Write(array[a, k] );}
+            //    Console.Write("、");
+         //}
+
+
+            //輸出地雷圖
+            //Console.WriteLine("\narrayMap:");
+            for (int a = 0; a < Int32.Parse(mapSize); a++)
+            {
+                for (int k = 0; k < Int32.Parse(mapSize); k++)
+                {
+                    if (arrayMap[k, a] < 0)
+                    { Console.Write("X"); }
+                    else 
+                    { Console.Write(arrayMap[k, a]); }
+                   
+                }
+                Console.WriteLine();
+                //Console.Write("、");
+            }
+            Console.ReadKey();
+        }
+    }
+}
