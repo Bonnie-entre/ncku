@@ -1,0 +1,182 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace week4_practice2
+{
+    class Program
+    {
+        public class MyPoint
+        {
+            public MyPoint parent { get; set; }
+            public int X { get; set; }
+            public int Y { get; set; }
+
+            public MyPoint(int a, int b)
+            {
+                this.X = a;
+                this.Y = b;
+            }
+        }
+
+        static void WritePath(MyPoint p, int[,] data)  
+        {
+            if (p.parent != null)
+            {
+                WritePath(p.parent, data);
+                data[p.Y, p.X] = 5;       //標記星星
+            }
+            
+        }
+
+        static void DrawMap(int h, int x,int[,] map)
+        {
+            Console.WriteLine("輸入迷宮地圖:");
+            for (int i = 0; i < h; i++)
+            {
+                for (int j = 0; j < x; j++)
+                {
+                    if (map[i, j] == 2) { Console.Write("X"); continue; }
+                    else if (map[i, j] == 8) { Console.Write("0"); continue; }
+                    else if (map[i, j] == 1) { Console.Write("1"); }
+
+                    else { Console.Write(" "); }
+                }
+                Console.WriteLine("");
+            }
+        }
+
+        static void DrawMapSol(int h, int x, int[,] map)
+        {
+            Console.WriteLine("Output:");
+            for (int i = 0; i < h; i++)
+            {
+                for (int j = 0; j < x; j++)
+                {
+                    if (map[i, j] == 2) { Console.Write("X"); continue; }
+                    else if (map[i, j] == 8) { Console.Write("0"); continue; }
+                    else if (map[i, j] == 5) { Console.Write("*"); continue; }
+                    else if (map[i, j] == 1) { Console.Write("1"); }
+                    else { Console.Write(" "); }
+                }
+                Console.WriteLine("");
+            }
+        }
+
+        static void Main(string[] args)
+        {
+
+            Console.Write("請輸入迷宮大小(底,高):");
+            string input = Console.ReadLine();
+            string[] inputnum = input.Split(',');
+            int h = int.Parse(inputnum[0]);
+            int x = int.Parse(inputnum[1]);
+
+            //解迷宮設定
+            int[,] distance = new int[h, x];
+
+            //外框rule
+            int[,] map = new int[h, x];
+            for (int i = 0; i < h; i++)
+            {
+                for (int j = 0; j < x; j++)
+                {
+                    if (i == 0 | i == h - 1) { map[i, j]++; continue; }
+                    if (j == 0 | j == x - 1) { map[i, j]++; }
+                }
+            }
+
+            //選出起點0 終點X
+            Random ranObj = new Random();
+            int ranX = ranObj.Next(1, x - 1);
+            int ranH = ranObj.Next(1, h - 1);
+            map[h - 1, ranX] = 8;
+            map[ranH, x - 1] = 2;
+
+            //Walls
+            for (int n = 0; n < (h * x / 5); n++)
+            {
+                while (true)
+                {
+                    int ranx = ranObj.Next(1, x - 1);
+                    int ranh = ranObj.Next(1, h - 1);
+                    if (map[ranh, ranx] < 1) { map[ranh, ranx] = 1; break; }
+                }
+
+            }
+
+
+
+
+            //解迷宮
+            //可以先確認起點or終點是否被1包圍，若是=>"沒有路徑"
+            //若否，開始 BFS
+            //起點：map[h - 1, ranX]
+            int countWhile = 0; //countUDLR = 0
+            if (map[h - 2, ranX] == 1)
+            {
+                DrawMap(h, x, map);
+                DrawMapSol(h, x, map);
+                Console.WriteLine("沒有路徑");
+                System.Environment.Exit(0);                        
+            }
+            else if (map[ranH, x - 2] == 1)
+            {
+                DrawMap(h, x, map);
+                DrawMapSol(h, x, map);
+                Console.WriteLine("沒有路徑");
+                System.Environment.Exit(0);                         
+            }
+            else
+            {
+                Queue<MyPoint> q = new Queue<MyPoint>();
+                MyPoint p_bfs = new MyPoint(ranX, h - 1);   //起點：map[h - 1, ranX]      //X->x，Y->h
+                q.Enqueue(p_bfs);
+
+                while (q.Count > 0)
+                {
+                    countWhile++;
+                    MyPoint qp = (MyPoint)q.Dequeue();
+
+                    for (int i = -1; i < 2; i++)            //遍歷上下左右
+                    {
+                        for (int j = -1; j < 2; j++)
+                        {
+                            if ((qp.X + i > 0) && (qp.X + i <= x - 1) && (qp.Y + j > 0) && (qp.Y + j < h - 1) && (qp.X + i == qp.X || qp.Y + j == qp.Y)) //是否越界，遍歷上下左右
+                            {
+                                //countUDLR++;
+                                if (map[qp.Y + j, qp.X + i] == 0 || map[qp.Y + j, qp.X + i] == 2)   //不是wall，再判斷
+                                {
+                                    if (map[qp.Y + j, qp.X + i] == 2)  //如果是終點 map[ranH, x - 1]
+                                    {
+                                        WritePath(qp, map);              //遞迴輸出路徑
+                                    }
+                                    else    //如果not終點
+                                    {
+                                        distance[qp.Y + j, qp.X + i] = distance[qp.Y, qp.X] + 1;
+                                        MyPoint temp = new MyPoint(qp.Y + j, qp.X + i);   //加入queue
+                                        map[qp.Y + j, qp.X + i] = 9;    //標記-1和區別為判斷過的0作區別
+                                        temp.parent = qp;   
+                                        q.Enqueue(temp);
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            //Draw the map
+            DrawMap(h, x, map);
+            DrawMapSol(h,x,map);
+            Console.WriteLine(distance[ranH, x - 2]);
+
+            Console.ReadKey();
+
+        }
+    }
+}
