@@ -1,0 +1,8 @@
+#include <stdio.h>
+
+int main(void){
+    int A,B,C,D;
+    scanf("%4d%4d%4d%4d", &A, &B, &C, &D);
+    printf("%4.4d %4.4d %4.4d", A, A+C-B, A+C-B-D);
+    return 0;
+}
