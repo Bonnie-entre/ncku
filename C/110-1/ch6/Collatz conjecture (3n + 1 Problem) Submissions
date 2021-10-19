@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+int main(void){
+    int length=1, n;
+    scanf("%d", &n);
+    int max=n;
+    
+    while(n>1)
+    {
+    if (n%2==0)
+    {
+    	n /=2;
+    }
+    else
+    {
+    	n =n*3+1;
+    }
+    if (n>max){ max=n; }
+    
+    length++;
+    }
+    
+    printf("%d %d", length, max);
+    return 0;
+}
+
