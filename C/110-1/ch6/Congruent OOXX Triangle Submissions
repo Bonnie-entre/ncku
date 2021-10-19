@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int main () {
+    int n;
+    scanf("%d", &n);
+    
+    for(int i=0; i<n-1; i++)
+    {
+    	for(int j=1; j<=n+i; j++)
+        {
+            if (j==n-i) { printf("O"); }
+            else if (j>n-i)
+            {
+            	printf("XO");
+                j++;
+            }
+            else {printf(" ");}
+        }
+        printf("\n");
+    }
+    for(int i=0; i<n*2-1; i++) {printf("O");}
+    return 0;
+}
+
