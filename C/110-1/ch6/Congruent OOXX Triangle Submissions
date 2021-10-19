@@ -4,9 +4,9 @@ int main () {
     int n;
     scanf("%d", &n);
     
-    for(int i=0; i<n-1; i++)
+    for(int i=0; i<n-1; i++)    //第幾層
     {
-    	for(int j=1; j<=n+i; j++)
+    	for(int j=1; j<=n+i; j++)   //第幾層的第幾個
         {
             if (j==n-i) { printf("O"); }
             else if (j>n-i)
