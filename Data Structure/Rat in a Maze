@@ -1,0 +1,227 @@
+//ref: https://www.itread01.com/content/1547235069.html
+
+//
+//  main.cpp
+//  hw1_theRatinaMaze
+//
+//  Created by 蔡易妏 on 2021/10/20.
+//
+using namespace std;
+#include <iostream>
+#include <fstream>
+#include<stdlib.h>
+#include<stack>
+//#include<iomanip>
+
+typedef struct
+{
+    int x,y;
+}Pos;
+
+typedef struct
+{
+    //int n;//迷宮大小
+    Pos start,end;
+    int maze[17][17]={
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+        {1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1},
+        {1,0,1,0,0,1,1,1,1,1,1,0,0,1,1,0,1},
+        {1,0,1,0,1,1,0,0,0,0,1,0,1,0,1,0,1},
+        {1,0,1,1,1,0,1,0,1,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,1,1,0,1,1,1,1,1,0,0,1},
+        {1,1,1,1,1,0,0,0,0,1,0,0,0,1,0,0,1},
+        {1,0,1,1,0,0,1,0,0,0,0,1,0,0,1,0,1},
+        {1,0,1,1,0,1,0,0,1,0,1,1,1,0,1,1,1},
+        {1,0,0,0,0,1,1,1,0,0,0,1,0,0,0,0,1},
+        {1,0,1,1,0,0,1,1,0,0,0,1,0,0,1,0,1},
+        {1,0,1,1,0,0,1,0,0,0,0,0,1,1,1,0,1},
+        {1,0,1,1,1,0,0,1,1,1,1,1,1,0,1,0,1},
+        {1,0,1,1,0,0,1,0,0,0,0,0,1,0,0,0,1},
+        {1,0,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1},
+        {1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+    };
+    
+    //mark走過 mark-1！
+    int mark[17][17] ={
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+            {1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1},
+            {1,0,1,0,0,1,1,1,1,1,1,0,0,1,1,0,1},
+            {1,0,1,0,1,1,0,0,0,0,1,0,1,0,1,0,1},
+            {1,0,1,1,1,0,1,0,1,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,0,1,1,0,1,1,1,1,1,0,0,1},
+            {1,1,1,1,1,0,0,0,0,1,0,0,0,1,0,0,1},
+            {1,0,1,1,0,0,1,0,0,0,0,1,0,0,1,0,1},
+            {1,0,1,1,0,1,0,0,1,0,1,1,1,0,1,1,1},
+            {1,0,0,0,0,1,1,1,0,0,0,1,0,0,0,0,1},
+            {1,0,1,1,0,0,1,1,0,0,0,1,0,0,1,0,1},
+            {1,0,1,1,0,0,1,0,0,0,0,0,1,1,1,0,1},
+            {1,0,1,1,1,0,0,1,1,1,1,1,1,0,1,0,1},
+            {1,0,1,1,0,0,1,0,0,0,0,0,1,0,0,0,1},
+            {1,0,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1},
+            {1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+    };
+}Maze;
+
+
+
+
+void InputMaze( Maze &m ){
+    ifstream inFile("maze.txt",ios::in);
+    
+    
+    for(int i = 0; i < 17; i++)
+        {
+            for(int j = 0; j < 17; j++)
+            {
+                inFile>>m.maze[i][j];
+                //cout<<m.maze[i][j]<<" ";    //印出來看看
+            }
+            //cout<<endl; //印出來看看
+        }
+        inFile.close();
+        
+    //cout<<m.maze[0][0]<<m.maze[2][2] <<endl;
+    //cout<<m.maze[16][15]<<m.maze[15][3] <<m.maze[16][7] <<endl;
+}
+
+
+
+Pos Go(Maze m, Pos curpos)
+{
+    Pos nextpos;
+    
+    //無路
+    nextpos.x = -1;
+    nextpos.y = -1;
+    
+    int x,y;
+    x = curpos.x;
+    y = curpos.y;
+    
+    //二維陣列x朝下，y朝右！
+    //有沒有需要挑最短路徑？
+    if(m.mark[x+1][y] == 0)//下
+   {
+       nextpos.x = x+1;
+       nextpos.y = y;
+   }
+    else if(m.mark[x][y+1] == 0)//右
+    {
+        nextpos.x = x;
+        nextpos.y = y+1;
+    }
+     
+    else if(m.mark[x][y-1] == 0)//左
+    {
+        nextpos.x = x;
+        nextpos.y = y-1;
+    }else if(m.mark[x-1][y] == 0)//上
+    {
+        nextpos.x = x-1;
+        nextpos.y = y;
+    }
+    return nextpos;
+}
+
+
+void MazePath(Maze m){
+    Pos curpos,nextpos;
+    stack<Pos> path_stack;  //pathRecord
+    curpos = m.start;
+    int count = 0;      //backCount=0
+    
+    //找路
+    do{
+        nextpos = Go(m,curpos);
+        //cout << count << ":" <<"nextpos: "<<nextpos.x<<" "<<nextpos.y<<endl;  //檢視詳細回頭過程
+        count++; //backCount++;
+        
+        if(curpos.x == m.end.x && curpos.y == m.end.y)  //now踩著終點
+        {
+            path_stack.push(curpos);
+            m.mark[curpos.x][curpos.y] = -1;    //走過mark-1
+            break;
+        }
+        else if(nextpos.x != -1) //go through
+        {
+            path_stack.push(curpos);
+            m.mark[curpos.x][curpos.y] = -1;    //走過mark-1
+            curpos = nextpos;   //前往下一步
+        }
+        else
+        {
+            m.mark[curpos.x][curpos.y] = -2;    //此路不通
+            curpos = path_stack.top();
+            path_stack.pop();   //刪除，等於回去上一個點，再查找有沒有其他可能    //回頭
+            //backCount--;  //cout << "   Go back to" << backCount << ":" << curpos.x<<" "<<curpos.y<<endl;
+        }
+    }while(!path_stack.empty());
+        
+    
+    // 輸出結果
+    if(path_stack.empty()) {cout<<"Failed to escape."<<endl;}
+    else{
+        stack<Pos>tmp_stack;
+        int n = 0;
+        
+        //因為stack FILO，所以用一個texp_stack反向
+        while(!path_stack.empty())
+        {
+            curpos = path_stack.top();
+            path_stack.pop();
+            tmp_stack.push(curpos);
+       }
+       
+       while(!tmp_stack.empty())
+        {
+            n++;
+            curpos = tmp_stack.top();
+            cout << n << ": " << curpos.x << "," << curpos.y << endl;   //印出來
+            tmp_stack.pop();
+            m.mark[curpos.x][curpos.y] = n;
+       }
+        cout<<"successfully escape!!"<<endl;
+    }
+}
+
+
+int main(int argc, const char * argv[]) {
+    
+    //輸入迷宮地圖
+    Maze m; //解決不了就先暴力法吧～
+    
+    
+    //印maxe看看
+    for(int i = 0; i < 17; i++)
+        {
+            for(int j = 0; j < 17; j++)
+            {
+                cout<<m.maze[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+    
+    //keep entering the position pairs until (-1,-1)
+    m.start.x =0;
+    m.start.y =0;
+    while (1){
+        cout <<  "enter start position: ";
+        cin >>  m.start.x >> m.start.y;
+        
+        if (m.start.x== -1 && m.start.y == -1) {
+            cout << "end the code." << endl;
+            break;
+            
+        }
+        cout <<  "enter exit position: ";
+        cin >>  m.end.x >> m.end.y;
+        
+        MazePath(m);
+    }
+    
+    
+    
+    return 0;
+}
