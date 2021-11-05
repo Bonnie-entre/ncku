@@ -1,0 +1,29 @@
+#include<stdio.h>
+
+int main () {
+    long n, x;
+    char c;
+    int a[26]={0};
+    
+    scanf("%ld", &n);
+    int i=0;
+    while(i<n)
+    {
+        scanf("%ld %c", &x, &c);
+        getchar();	//!!
+        if (c>='A' && c<='Z')	//!!
+        	a[c-'A'] =x;
+    	i++;
+    }
+    
+    for (int j=0; j<26; j++){
+    	if (a[j]==0)
+            printf("Not found plan %c.\n", 'A'+j);
+        else
+        	printf("Plan %c is in box %d.\n", 'A'+j, a[j]);
+    }
+    
+    return 0;
+}
+
+
