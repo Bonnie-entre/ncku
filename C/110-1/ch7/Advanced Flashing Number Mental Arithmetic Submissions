@@ -1,0 +1,47 @@
+#include<stdio.h>
+#include<math.h>
+
+int main () {
+    int k, e;
+    unsigned long long ans=0, n;
+    
+    scanf("%d ", &k);
+    
+    int i=0;
+    while(i<k){
+        i++;
+        scanf("%d ", &e);
+        switch(e){
+            case 6:
+              scanf("%lld ", &n);
+              int x=0;
+              int s=0;
+              while(n>0){
+             	  s+=(n%10)*pow(e, x);
+                n/=10;
+                x++;
+              }
+              n=s;
+              break;
+            case 10:
+            	scanf("%lld ", &n);
+            	break;
+            case 8:
+                scanf("%llo ", &n);
+        		break;
+            case 16:
+                scanf("%llx", &n);
+        		break;
+        }
+    	ans+=n;
+      //printf("Line%d: %d位元 加上n=%lld ans=%lld\n", i,e,n,ans);
+        
+        
+    }
+    int y =ans/1000000007;
+    ans-= y*1000000007;
+    printf("%d", (int)ans);
+    
+    return 0;
+}
+
