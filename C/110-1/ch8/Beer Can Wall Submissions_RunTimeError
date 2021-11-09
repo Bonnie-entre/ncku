@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+//階層！
+int fact(int n){
+  if (n==1) {return 1;}
+  return n*fact(n-1);
+}
+
+int main () {
+    int w, nH, nW, count=0, x;
+    
+    scanf("%d", &w);
+
+    nH=w/20;
+    while(nH>=0){
+    	nW=(w-(20*nH))/10;
+        if (nH>0 && nW>0){
+        	x = ( fact(nW+nH)/ fact(nW)/ fact(nH) );
+          //printf("intoFact: %d\n", x);
+          count+=x-1;
+        }
+        //printf("debug: nH=%d nW=%d, count=%d\n", nH, nW, count);
+        count++;
+        nH--;
+    }
+    
+    printf("%d\n", count);
+    
+    return 0;
+}
+
+
+
