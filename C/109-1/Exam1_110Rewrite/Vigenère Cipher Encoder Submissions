@@ -2,7 +2,7 @@
 
 int main(void){
     int n, ai[100];
-    char a[100], w[100];
+    char a[100], w[100000]; //多加3個零，就不RunTimeError了！
     
     scanf("%d ", &n);
     for(int i=0; i<n; i++)
