@@ -16,25 +16,25 @@ int main(void){
     while(1)
     {
     	w[i] =getchar();
-      if(w[i]==10) { break;}
-      i++;
+        if(w[i]==10) { break;}
+        i++;
     }
     
     int count=0;
     for(int j=0; j<i; j++){
     	if(w[j]>='a' && w[j]<='z')
         {
-        	w[j] = ((w[j]-'a')+ai[count%n])%26+'a';
-          count++;
+            w[j] = ((w[j]-'a')+ai[count%n])%26+'a';
+            count++;
         }
             
-      if (w[j]>='A' && w[j]<='Z')
+        if (w[j]>='A' && w[j]<='Z')
         {
         	w[j] = ((w[j]-'A')+ai[count%n])%26+'A';
-          count++;
+            count++;
         }
         
-      printf("%c", w[j]);
+        printf("%c", w[j]);
     }
     
     return 0;
