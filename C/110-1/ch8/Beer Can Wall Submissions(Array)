@@ -3,7 +3,7 @@
 int main () {
     
     int w;
-    int a[50];
+    long a[50];     //w輸入至460會開始出錯 ＯＶＥＲＦＬＯＷ, 因此要用ｌｏｎｇ！
     a[0]=1; a[1]=1;
     
     scanf("%d", &w);
@@ -11,7 +11,7 @@ int main () {
     for(int i=2; i<=w/10; i++){
         a[i]=a[i-1]+a[i-2];
     }
-    printf("%d", a[w/10]);
+    printf("%ld", a[w/10]);
     
     return 0;
 }
