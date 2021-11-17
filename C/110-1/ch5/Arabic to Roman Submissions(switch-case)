@@ -1,0 +1,59 @@
+#include <stdio.h>
+int main(void){
+    int num, t;
+    scanf("%d", &num);
+    //千位數
+    switch(num/1000){
+        case 3: case 2: case 1:
+            for(int i=1; i<=num/1000; i++) { printf("M"); }
+            break;
+    }
+    
+    //百位數
+    switch(num%1000/100){
+    	case 9: printf("CM"); break;
+        case 8: case 7: case 6: case 5:
+            printf("D");
+            for(int i=1; i<=num%1000/100-5; i++) { printf("C"); }
+            break;
+        case 4:
+            printf("CD");
+            break;
+        case 3: case 2: case 1:
+            for(int i=1; i<=num%1000/100; i++) { printf("C"); }
+            break;
+    }
+    
+    //十位數
+    switch(num%100/10){
+    	case 9: printf("XC"); break;
+        case 8: case 7: case 6: case 5:
+            printf("L");
+            for(int i=1; i<=num%100/10-5; i++) { printf("X"); }
+            break;
+        case 4:
+            printf("XL");
+            break;
+        case 3: case 2: case 1:
+            for(int i=1; i<=num%100/10; i++) { printf("X"); }
+            break;
+    }
+    
+    //個位數
+    switch(num%10){
+    	case 9: printf("IX"); break;
+        case 8: case 7: case 6: case 5:
+            printf("V");
+            for(int i=1; i<=num%10-5; i++) { printf("I"); }
+            break;
+        case 4:
+            printf("IV");
+            break;
+        case 3: case 2: case 1:
+            for(int i=1; i<=num%10; i++) { printf("I"); }
+            break;
+    
+    }
+    
+    return 0;
+}
