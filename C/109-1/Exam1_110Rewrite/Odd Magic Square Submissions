@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 int main(void){
-    int n, a[50][50];
+    int n, a[50][50]={0};   //記得初始化0，not WRONGaNSWER anymore
     scanf("%d", &n);
     
     int c=n/2, r=0;
