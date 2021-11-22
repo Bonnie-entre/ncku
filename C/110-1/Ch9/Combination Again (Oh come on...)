@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+int m, n;
+long long ans=1, end;
+
+int cnt(){
+    if (m==n | n==0) { return 1; }
+    
+	int count=1;
+    for (int i=m; i>=n+1; i--)
+	    {
+        ans *=i; 
+        if (count<=m-n){
+          ans /= count;
+          count ++;
+        }
+      }
+    return ans;
+}
+
+int main(void){
+    
+    scanf("%d %d", &m, &n);
+    //end = cnt(n-1, m-1)+cnt(n-1, m);
+    printf("%lld", cnt(m,n));
+    return 0;
+}
